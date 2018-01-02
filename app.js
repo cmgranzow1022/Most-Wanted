@@ -7,7 +7,8 @@ function app(people){
   var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
   switch(searchType){
     case 'yes':
-    // TODO: search by name
+    let arrayOfPeople = searchByName(people);
+    let newArray = displayPeople(arrayOfPeople);
     break;
     case 'no':
     searchByTraits(people);
@@ -56,6 +57,7 @@ function searchByWeight(people) {
   return newArray;
 }
 
+
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
 
@@ -89,17 +91,48 @@ function mainMenu(person, people){
 }
 
 function searchByName(people){
-  var firstName = promptFor("What is the person's first name?", chars);
-  var lastName = promptFor("What is the person's last name?", chars);
-
-  // TODO: find the person using the name they entered
-
+  
+  var firstName = promptFor("What is the person's first name?" + "\n" + "If unknown, type in n/a.", chars);
+  var lastName = promptFor("What is the person's last name?" + "\n" + "If unknown, type in n/a.", chars);
+  if ( firstName == "n/a" || lastName == "n/a"){
+      let answer = people.filter(function(el){
+        if (firstName == el.firstName || lastName == el.lastName){
+          return true;
+        }
+        else{
+          return false;
+        }
+      })
+      return answer;
+    }
+  else{
+      let answer = people.filter(function(el){
+       if (firstName == el.firstName && lastName == el.lastName){
+          return true;
+       }
+      else{
+         return false;
+      }
+      })
+    return answer;  
+  }
+  
 }
+
+  
+  
+  
+
+
+
 
 // alerts a list of people
 function displayPeople(people){
+  let i = 0;
   alert(people.map(function(person){
-    return person.firstName + " " + person.lastName;
+    i++;
+    return i + ". " + person.firstName + " " + person.lastName;
+    
   }).join("\n"));
 }
 
