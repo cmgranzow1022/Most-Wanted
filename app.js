@@ -8,18 +8,8 @@ function app(people){
   switch(searchType){
     case 'yes':
     let arrayOfPeople = searchByName(people);
-
-      if(arrayOfPeople.length > 2){
-      let newArray = displayPeople(arrayOfPeople);
-      }
-      else if(arrayOfPeople.length === 0){
-        alert("This person is not in the Most Wanted Database.");
-      } 
-      else if(arrayOfPeople[0].firstName){
-        let newArray = arrayOfPeople;
-        console.log(newArray);
-      }
-    
+    let verifiedName = mostWantedVerification(arrayOfPeople);
+    console.log(arrayOfPeople);
 
     break;
     case 'no':
@@ -30,6 +20,25 @@ function app(people){
     app(people); // restart app
     break;
   }
+}
+
+
+
+function mostWantedVerification(name){
+      if(name.length > 2){
+      let newArray = displayPeople(name);
+      return newArray;
+      }
+      else if(name.length === 0){
+        alert("This person is not in the Most Wanted Database.");
+      } 
+      else if(name[0].firstName){
+        let newArray = name;
+        console.log(newArray);
+        return newArray;
+
+      }
+    
 }
 
 function searchByTraits(people) {
@@ -133,10 +142,6 @@ function searchByName(people){
 
   
   
-  
-
-
-
 
 // alerts a list of people
 function displayPeople(people){
@@ -145,7 +150,10 @@ function displayPeople(people){
     i++;
     return i + ". " + person.firstName + " " + person.lastName;
     
-  }).join("\n"));
+  }
+  ).join("\n")
+  );
+
 }
 
 function displayPerson(person){
