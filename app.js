@@ -8,7 +8,19 @@ function app(people){
   switch(searchType){
     case 'yes':
     let arrayOfPeople = searchByName(people);
-    let newArray = displayPeople(arrayOfPeople);
+
+      if(arrayOfPeople.length > 2){
+      let newArray = displayPeople(arrayOfPeople);
+      }
+      else if(arrayOfPeople.length === 0){
+        alert("This person is not in the Most Wanted Database.");
+      } 
+      else if(arrayOfPeople[0].firstName){
+        let newArray = arrayOfPeople;
+        console.log(newArray);
+      }
+    
+
     break;
     case 'no':
     searchByTraits(people);
