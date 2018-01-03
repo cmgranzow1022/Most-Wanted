@@ -99,6 +99,8 @@ function mainMenu(person, people){
     case "family":
     let hasChildren = calculateChildren(person, people);
     let spouse = getSpouse(person, people);
+    let siblings = getSiblings(person, people);
+    console.log(siblings);
     break;
     case "descendants":
     // TODO: get person's descendants
@@ -189,6 +191,17 @@ function getSpouse(person, people) {
     }
   }
   return spouseArray;
+}
+
+function getSiblings (person, people) {
+  let siblingsArray = [];
+  for (i = 0; i < people.length; i++) {
+    if ((person.parents[0] == people[i].parents[0]) && (person != people[i])) {
+      siblingsArray.push(people[i]);
+
+    }
+  }
+  return siblingsArray;
 }
 
 function convertDOBToAge(person) {
