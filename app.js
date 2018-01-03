@@ -9,8 +9,7 @@ function app(people){
     case 'yes':
     let arrayOfPeople = searchByName(people);
     let verifiedName = mostWantedVerification(arrayOfPeople);
-    console.log(arrayOfPeople);
-
+    mainMenu(verifiedName);
     break;
     case 'no':
     searchByTraits(people);
@@ -84,16 +83,18 @@ function mainMenu(person, people){
 
   /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
 
-  if(!person){
-    alert("Could not find that individual.");
-    return app(people); // restart
-  }
+  // if(!person){
+  //   alert("Could not find that individual.");
+  //   return app(people); // restart
+  // }
 
-  var displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+  var displayOption = prompt("Found " + person.firstName + " " + person.lastName + ". Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
 
   switch(displayOption){
     case "info":
     // TODO: get person's info
+    displayPerson(person);
+
     break;
     case "family":
     // TODO: get person's family
@@ -141,29 +142,48 @@ function searchByName(people){
 }
 
   
-  
-
 // alerts a list of people
 function displayPeople(people){
   let i = 0;
-  alert(people.map(function(person){
+  let personChosen = prompt("Enter the number of the person who you would like to view more information on:" + "\n\r" + people.map(function(person){
     i++;
     return i + ". " + person.firstName + " " + person.lastName;
     
   }
   ).join("\n")
   );
-
+  personChosen = people[personChosen - 1];
+return personChosen;
 }
 
 function displayPerson(person){
-  // print all of the information about a person:
-  // height, weight, age, name, occupation, eye color.
   var personInfo = "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
+  personInfo += "Gender: " + person.gender + "\n";
+  personInfo += "Age: " + convertDOBToAge(person) + "\n";
+
+
+
+
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
+
+function convertDOBToAge(person) {
+  let birthday = person.dob;
+  let birthdaySplit = birthday.split("/");
+  let newFormat = birthdaySplit[2] + "," + birthdaySplit[0] + "," + birthdaySplit[1];
+  let age = calculate_age(new Date(newFormat));
+  console.log(age);
+  return age;
+}
+
+function calculate_age(dob) {
+   var diff_ms = Date.now() - dob.getTime();
+   var age_dt = new Date(diff_ms);
+   return Math.abs(age_dt.getUTCFullYear() - 1970);
+}
+
 
 // function that prompts and validates user input
 function promptFor(question, valid){
