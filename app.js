@@ -24,7 +24,7 @@ function app(people){
 
 
 function mostWantedVerification(name){
-      if(name.length > 2){
+      if(name.length >= 2){
       let newArray = displayPeople(name);
       return newArray;
       }
@@ -98,7 +98,7 @@ function mainMenu(person, people){
     break;
     case "family":
     let hasChildren = calculateChildren(person, people);
-    console.log(hasChildren);
+    let spouse = getSpouse(person, people);
     break;
     case "descendants":
     // TODO: get person's descendants
@@ -181,7 +181,15 @@ function calculateChildren(person, people) {
   return children;
 }
 
-
+function getSpouse(person, people) {
+  let spouseArray = [];
+  for (i = 0; i < people.length; i++) {
+    if (person.currentSpouse == people[i].id) {
+      spouseArray.push(people[i]);
+    }
+  }
+  return spouseArray;
+}
 
 function convertDOBToAge(person) {
   let birthday = person.dob;
