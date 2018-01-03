@@ -96,6 +96,16 @@ function mainMenu(person, people){
 
     break;
     case "descendants":
+    // let hasChildren = calculateChildren(person, people);
+
+    // let descendantString = "";
+
+    // for (let i = 0; i < hasChildren.length; i++) {
+    // 	let newHasChildren = calculateChildren(hasChildren[i], people)
+    // 	descendantString += 
+    // 	i++
+    // }
+
     // TODO: get person's descendants
     break;
     case "restart":
@@ -107,6 +117,7 @@ function mainMenu(person, people){
     return mainMenu(person, people); // ask again
   }
 }
+
 
 
 function displayFamily(people) {
