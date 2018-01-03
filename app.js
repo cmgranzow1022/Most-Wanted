@@ -1,8 +1,3 @@
-/*
-Build all of your functions for displaying and gathering information below (GUI).
-*/
-
-// app is the function called to start the entire application
 function app(people){
   var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
   switch(searchType){
@@ -24,26 +19,23 @@ function app(people){
 
 
 function mostWantedVerification(name){
-      if(name.length >= 2){
-      let newArray = displayPeople(name);
-      return newArray;
-      }
-      else if(name.length === 0){
-        alert("This person is not in the Most Wanted Database.");
-      } 
-      else if(name[0].firstName){
-        let newArray = name;
-        console.log(newArray);
-        return newArray;
-
-      }
-    
+  if(name.length >= 2){
+  let newArray = displayPeople(name);
+  return newArray;
+  }
+  else if(name.length === 0){
+    alert("This person is not in the Most Wanted Database.");
+  } 
+  else if(name[0].firstName){
+    let newArray = name;
+    console.log(newArray);
+    return newArray;
+  }
 }
 
 function searchByTraits(people) {
   let userSearchChoice = prompt("What would you like to search by? 'height', 'weight', 'eye color', 'gender', 'age', 'occupation'.");
   let filteredPeople;
-
   switch(userSearchChoice) {
     case "height":
       filteredPeople = searchByHeight(people);
@@ -57,23 +49,18 @@ function searchByTraits(people) {
       searchByTraits(people);
       break;
   }  
-
   let foundPerson = filteredPeople[0];
-
   mainMenu(foundPerson, people);
-
 }
 
 function searchByWeight(people) {
   let userInputWeight = prompt("How much does the person weigh?");
-
   let newArray = people.filter(function (el) {
     if(el.weight == userInputWeight) {
       return true;
     }
     // return true if el.height matches userInputHeight
   });
-
   return newArray;
 }
 
@@ -100,7 +87,13 @@ function mainMenu(person, people){
     let hasChildren = calculateChildren(person, people);
     let spouse = getSpouse(person, people);
     let siblings = getSiblings(person, people);
-    console.log(siblings);
+    let parents = getParent(person, people);
+    let children = displayFamily(hasChildren);
+    let spouseName = displayFamily(spouse);
+    let siblingsNames = displayFamily(siblings);
+    let parentsNames = displayFamily(parents);
+    alert("Child(ren): " + "\n" + children + "\n" + "Spouse: " + "\n" + spouseName + "\n" + "Sibling(s): " + "\n" + siblingsNames + "\n" + "Parent(s): " + "\n" + parentsNames + "\n");
+
     break;
     case "descendants":
     // TODO: get person's descendants
@@ -115,11 +108,21 @@ function mainMenu(person, people){
   }
 }
 
+
+function displayFamily(people) {
+  let aString = "";
+  for (let i = 0; i < people.length; i++) {
+    aString += people[i].firstName + " " + people[i].lastName + "\n";
+  }
+    return aString;
+}
+
+
+
 function searchByName(people){
-  
   var firstName = promptFor("What is the person's first name?" + "\n" + "If unknown, type in n/a.", chars);
   var lastName = promptFor("What is the person's last name?" + "\n" + "If unknown, type in n/a.", chars);
-  if ( firstName == "n/a" || lastName == "n/a"){
+  if (firstName == "n/a" || lastName == "n/a"){
       let answer = people.filter(function(el){
         if (firstName == el.firstName || lastName == el.lastName){
           return true;
@@ -141,7 +144,6 @@ function searchByName(people){
       })
     return answer;  
   }
-  
 }
 
   
@@ -151,7 +153,6 @@ function displayPeople(people){
   let personChosen = prompt("Enter the number of the person who you would like to view more information on:" + "\n\r" + people.map(function(person){
     i++;
     return i + ". " + person.firstName + " " + person.lastName;
-    
   }
   ).join("\n")
   );
@@ -196,12 +197,23 @@ function getSpouse(person, people) {
 function getSiblings (person, people) {
   let siblingsArray = [];
   for (i = 0; i < people.length; i++) {
-    if ((person.parents[0] == people[i].parents[0]) && (person != people[i])) {
+    if ((person.parents[0] == people[i].parents[0]) && (person != people[i]) && (people[i].parents.length > 0)) {
       siblingsArray.push(people[i]);
-
     }
   }
   return siblingsArray;
+}
+
+function getParent(person, people) {
+  let parentArray = [];
+  for (i = 0; i < people.length; i++) {
+    for (j = 0; j < person.parents.length; j++) {
+    if (person.parents[j] == people[i].id) {
+      parentArray.push(people[i]);
+    }
+  }
+}
+  return parentArray;
 }
 
 function convertDOBToAge(person) {
