@@ -9,7 +9,7 @@ function app(people){
     case 'yes':
     let arrayOfPeople = searchByName(people);
     let verifiedName = mostWantedVerification(arrayOfPeople);
-    mainMenu(verifiedName);
+    mainMenu(verifiedName, people);
     break;
     case 'no':
     searchByTraits(people);
@@ -97,7 +97,8 @@ function mainMenu(person, people){
 
     break;
     case "family":
-    // TODO: get person's family
+    let hasChildren = calculateChildren(person, people);
+    console.log(hasChildren);
     break;
     case "descendants":
     // TODO: get person's descendants
@@ -161,13 +162,26 @@ function displayPerson(person){
   personInfo += "Last Name: " + person.lastName + "\n";
   personInfo += "Gender: " + person.gender + "\n";
   personInfo += "Age: " + convertDOBToAge(person) + "\n";
-
-
-
-
-  // TODO: finish getting the rest of the information to display
+  personInfo += "Height: " + person.height + " inches" + "\n";
+  personInfo += "Weight: " + person.weight + " pounds" + "\n";
+  personInfo += "Eye Color: " + person.eyeColor + "\n";
+  personInfo += "Occupation: " + person.occupation + "\n";
   alert(personInfo);
 }
+
+function calculateChildren(person, people) {
+  let children = [];
+  for (let i = 0; i < people.length; i++) {
+    for (let j = 0; j < people[i].parents.length; j++){
+      if (people[i].parents[j] == person.id){
+        children.push(people[i]);
+      }
+    }
+  }
+  return children;
+}
+
+
 
 function convertDOBToAge(person) {
   let birthday = person.dob;
