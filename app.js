@@ -64,7 +64,7 @@ function searchByMultiTraits(people){
 	   		break;	
 	    default:
 	      alert("You entered an invalid search type! Please try again.");
-	      searchByTraits(people);
+	      searchByMultiTraits(people);
 	      break;	
 		}
 	}
