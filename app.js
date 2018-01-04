@@ -16,12 +16,13 @@ function app(people){
   }
 }
 
-
-
 function mostWantedVerification(name){
   if(name.length >= 2){
   let newArray = displayPeople(name);
   return newArray;
+  }
+  else if(name.length == 1){
+  	return name[0];
   }
   else if(name.length === 0){
     alert("This person is not in the Most Wanted Database.");
@@ -65,23 +66,13 @@ function searchByWeight(people) {
 }
 
 
-// Menu function to call once you find who you are looking for
+
 function mainMenu(person, people){
-
-  /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
-
-  // if(!person){
-  //   alert("Could not find that individual.");
-  //   return app(people); // restart
-  // }
-
   var displayOption = prompt("Found " + person.firstName + " " + person.lastName + ". Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
 
   switch(displayOption){
     case "info":
-    // TODO: get person's info
     displayPerson(person);
-
     break;
     case "family":
     let hasChildren = calculateChildren(person, people);
@@ -93,7 +84,6 @@ function mainMenu(person, people){
     let siblingsNames = displayFamily(siblings);
     let parentsNames = displayFamily(parents);
     alert("Child(ren): " + "\n" + children + "\n" + "Spouse: " + "\n" + spouseName + "\n" + "Sibling(s): " + "\n" + siblingsNames + "\n" + "Parent(s): " + "\n" + parentsNames + "\n");
-
     break;
     case "descendants":
  	let allDescendants = getDescendants(person, people);
@@ -101,12 +91,12 @@ function mainMenu(person, people){
  	alert("Descendant(s): " + "\n" + descendantPrint);
     break;
     case "restart":
-    app(people); // restart
+    app(people); 
     break;
     case "quit":
-    return; // stop execution
+    return; 
     default:
-    return mainMenu(person, people); // ask again
+    return mainMenu(person, people); 
   }
 }
 function getDescendants(person, people){
