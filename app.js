@@ -1,16 +1,19 @@
 function app(people){
-  var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
+  var searchType = prompt("Enter the number of how you would like to search for your person:" + "\n" + "1. Name" + "\n" + "2. Single Trait" + "\n" + "3. Multiple Traits");
   switch(searchType){
-    case 'yes':
+    case '1':
     let arrayOfPeople = searchByName(people);
     let verifiedName = mostWantedVerification(arrayOfPeople);
     mainMenu(verifiedName, people);
     break;
-    case 'no':
+    case '2':
     searchByTraits(people);
     break;
+    case '3':
+    searchByMultiTraits(people);
+    break;
     default:
-    alert("Wrong! Please try again, following the instructions dummy. :)");
+    alert("You didn't select a number in between 1 and 3, please try again!");
     app(people); // restart app
     break;
   }
@@ -26,12 +29,47 @@ function mostWantedVerification(name){
   }
   else if(name.length === 0){
     alert("This person is not in the Most Wanted Database.");
-  } 
+    location.reload(true);
+      } 
   else if(name[0].firstName){
     let newArray = name;
-    console.log(newArray);
     return newArray;
   }
+}
+
+function searchByMultiTraits(people){
+	let userSearchChoice = prompt("List the traits that you would like to search by:" + "\n" + "'height', 'weight', 'eye color', 'gender', 'age', 'occupation'" + "\n" + "Please seperate your traits with only a comma and no spaces.");
+	let traitsArray = userSearchChoice.split(",");
+	let filteredPeople = people;
+  	let verifiedName;
+	for (let i = 0; i < traitsArray.length; i++){
+		switch(traitsArray[i]) {
+	    case "height":
+	      filteredPeople = searchByHeight(filteredPeople);
+	      break;
+	    case "weight":
+	      filteredPeople = searchByWeight(filteredPeople);
+	      break;
+	    case "eye color":
+	      filteredPeople = searchByEyeColor(filteredPeople);
+	      break;
+	    case "gender":
+	       filteredPeople = searchByGender(filteredPeople);
+	       break;
+	   	case "age":
+	   		filteredPeople = searchByAge(filteredPeople);
+	   		break;
+	   	case "occupation":
+	   		filteredPeople = searchByOccupation(filteredPeople);
+	   		break;	
+	    default:
+	      alert("You entered an invalid search type! Please try again.");
+	      searchByTraits(people);
+	      break;	
+		}
+	}
+	let foundPerson = mostWantedVerification(filteredPeople);
+	mainMenu(foundPerson, people);
 }
 
 function searchByTraits(people) {
@@ -286,7 +324,6 @@ function convertDOBToAge(person) {
   let birthdaySplit = birthday.split("/");
   let newFormat = birthdaySplit[2] + "," + birthdaySplit[0] + "," + birthdaySplit[1];
   let age = calculate_age(new Date(newFormat));
-  console.log(age);
   return age;
 }
 
