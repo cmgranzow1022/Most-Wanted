@@ -97,7 +97,8 @@ function mainMenu(person, people){
     break;
     case "descendants":
  	let allDescendants = getDescendants(person, people);
- 	console.log(allDescendants);
+ 	let descendantPrint = displayFamily(allDescendants);
+ 	alert("Descendant(s): " + "\n" + descendantPrint);
     break;
     case "restart":
     app(people); // restart
@@ -108,20 +109,14 @@ function mainMenu(person, people){
     return mainMenu(person, people); // ask again
   }
 }
-
 function getDescendants(person, people){
-	let descendantsString = "";
-	let descendantsArray2 = [];
-	person = [person];
-	while (person.length > 0){
-		for (let i=0; i<person.length; i++){
-			descendantsArray2 = calculateChildren(person[i], people);
-			descendantsString += displayFamily(descendantsArray2);
-		}
-		person = descendantsArray2;
+	let child = []
+	child = calculateChildren(person, people);
+			for (let j = 0; j<child.length; j++){
+			child = child.concat(getDescendants(child[j], people))
+			}
+		return child
 	}
-	return descendantsString
-}
 
 function displayFamily(people) {
   let aString = "";
