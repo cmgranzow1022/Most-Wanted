@@ -96,17 +96,8 @@ function mainMenu(person, people){
 
     break;
     case "descendants":
-    // let hasChildren = calculateChildren(person, people);
-
-    // let descendantString = "";
-
-    // for (let i = 0; i < hasChildren.length; i++) {
-    // 	let newHasChildren = calculateChildren(hasChildren[i], people)
-    // 	descendantString += 
-    // 	i++
-    // }
-
-    // TODO: get person's descendants
+ 	let allDescendants = getDescendants(person, people);
+ 	console.log(allDescendants);
     break;
     case "restart":
     app(people); // restart
@@ -118,7 +109,19 @@ function mainMenu(person, people){
   }
 }
 
-
+function getDescendants(person, people){
+	let descendantsString = "";
+	let descendantsArray2 = [];
+	person = [person];
+	while (person.length > 0){
+		for (let i=0; i<person.length; i++){
+			descendantsArray2 = calculateChildren(person[i], people);
+			descendantsString += displayFamily(descendantsArray2);
+		}
+		person = descendantsArray2;
+	}
+	return descendantsString
+}
 
 function displayFamily(people) {
   let aString = "";
