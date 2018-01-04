@@ -37,35 +37,101 @@ function mostWantedVerification(name){
 function searchByTraits(people) {
   let userSearchChoice = prompt("What would you like to search by? 'height', 'weight', 'eye color', 'gender', 'age', 'occupation'.");
   let filteredPeople;
+  let verifiedName;
   switch(userSearchChoice) {
     case "height":
       filteredPeople = searchByHeight(people);
+      verifiedName = mostWantedVerification(filteredPeople);
       break;
     case "weight":
       filteredPeople = searchByWeight(people);
+      verifiedName = mostWantedVerification(filteredPeople);
       break;
-    // so on and so forth
+    case "eye color":
+      filteredPeople = searchByEyeColor(people);
+      verifiedName = mostWantedVerification(filteredPeople);
+      break;
+    case "gender":
+       filteredPeople = searchByGender(people);
+       verifiedName = mostWantedVerification(filteredPeople);
+       break;
+   	case "age":
+   		filteredPeople = searchByAge(people);
+   		verifiedName = mostWantedVerification(filteredPeople);
+   		break;
+   	case "occupation":
+   		filteredPeople = searchByOccupation(people);
+   		verifiedName = mostWantedVerification(filteredPeople);
+   		break;	
     default:
       alert("You entered an invalid search type! Please try again.");
       searchByTraits(people);
       break;
   }  
-  let foundPerson = filteredPeople[0];
+  let foundPerson = verifiedName;
   mainMenu(foundPerson, people);
 }
 
 function searchByWeight(people) {
-  let userInputWeight = prompt("How much does the person weigh?");
+  let userInputWeight = prompt("How much does the person weigh (in pounds)?");
   let newArray = people.filter(function (el) {
     if(el.weight == userInputWeight) {
       return true;
     }
-    // return true if el.height matches userInputHeight
   });
   return newArray;
 }
 
+function searchByHeight(people){
+	let userInputHeight = prompt("How tall is the person (in inches)?");
+	let newArray = people.filter(function(el) {
+		if(el.height == userInputHeight){
+			return true;
+		}
+	});
+	return newArray;
+}
 
+function searchByEyeColor(people){
+	let userInputEyeColor = prompt("What color are the person's eyes");
+	let newArray = people.filter(function(el) {
+		if(el.eyeColor == userInputEyeColor){
+			return true;
+		}
+	});
+	return newArray;
+}
+
+function searchByGender(people){
+	let userInputGender = prompt("What is your person's gender (male or female)?");
+	let newArray = people.filter(function(el) {
+		if(el.gender == userInputGender){
+			return true;
+		}
+	});
+	return newArray;
+}
+
+function searchByAge(people){
+	let userInputAge = prompt("How old is the person (in years)?");
+	let newArray = people.filter(function(el) {
+		let age = convertDOBToAge(el);
+		if(age == userInputAge){
+			return true;
+		}
+	});
+	return newArray;
+}
+
+function searchByOccupation(people){
+	let userInputOccupation = prompt("What is your person's occupation?");
+	let newArray = people.filter(function(el) {
+		if(el.occupation == userInputOccupation){
+			return true;
+		}
+	});
+	return newArray;
+}
 
 function mainMenu(person, people){
   var displayOption = prompt("Found " + person.firstName + " " + person.lastName + ". Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
