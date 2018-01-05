@@ -1,0 +1,15 @@
+.background{
+	background-image: url(images/fbi.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 21%;
+	
+}
