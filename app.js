@@ -58,7 +58,7 @@ function mostWantedVerification(name, people){
     	app(people);
     	break;
     	case 'quit':
-    	exit();
+    	location.reload();
     	break;
     	default:
     	mostWantedVerification(name, people);
