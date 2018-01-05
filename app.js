@@ -1,3 +1,4 @@
+"use strict"
 //   _______  _______   __                                                  
 //  /"     "||   _  "\ |" \                                                 
 // (: ______)(. |_)  :)||  |                                                
@@ -71,7 +72,7 @@ function mostWantedVerification(name, people){
 }
 
 function searchByMultiTraits(people){
-	let userSearchChoice = prompt("List the traits that you would like to search by:" + "\n" + "'height', 'weight', 'eye color', 'gender', 'age', 'occupation'" + "\n" + "Please seperate your traits with only a comma and no spaces.");
+	let userSearchChoice = prompt("List the traits that you would like to search by:" + "\n" + "'height', 'weight', 'eye color', 'gender', 'age', 'occupation'" + "\n" + "Please separate your traits with only a comma and no spaces.");
 	let traitsArray = userSearchChoice.split(",");
 	let traitList = ["height", "weight", "eye color", "gender", "age", "occupation"];
 	for (let i = 0; i < traitsArray.length; i++){
@@ -238,7 +239,8 @@ function mainMenu(person, people){
     app(people); 
     break;
     case "quit":
-    return; 
+    location.reload(true); 
+    break;
     default:
     alert("You have entered an incorrect option. Please try again.");
     return mainMenu(person, people); 
@@ -335,7 +337,7 @@ function calculateChildren(person, people) {
 
 function getSpouse(person, people) {
   let spouseArray = [];
-  for (i = 0; i < people.length; i++) {
+  for (let i = 0; i < people.length; i++) {
     if (person.currentSpouse == people[i].id) {
       spouseArray.push(people[i]);
     }
@@ -345,7 +347,7 @@ function getSpouse(person, people) {
 
 function getSiblings (person, people) {
   let siblingsArray = [];
-  for (i = 0; i < people.length; i++) {
+  for (let i = 0; i < people.length; i++) {
     if ((person.parents[0] == people[i].parents[0]) && (person != people[i]) && (people[i].parents.length > 0)) {
       siblingsArray.push(people[i]);
     }
@@ -355,8 +357,8 @@ function getSiblings (person, people) {
 
 function getParent(person, people) {
   let parentArray = [];
-  for (i = 0; i < people.length; i++) {
-    for (j = 0; j < person.parents.length; j++) {
+  for (let i = 0; i < people.length; i++) {
+    for (let j = 0; j < person.parents.length; j++) {
     if (person.parents[j] == people[i].id) {
       parentArray.push(people[i]);
     }
